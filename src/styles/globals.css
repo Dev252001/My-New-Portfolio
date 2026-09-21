@@ -1,0 +1,203 @@
+/* ── Design tokens ──────────────────────────────── */
+:root {
+  --bg: #F4F4F4;
+  --surface: #E9E9E9;
+  --surface-hover: #DEDEDE;
+  --ink: #111111;
+  --muted: #6B6B6B;
+  --line: #DCDCDC;
+  --status-green: #16A34A;
+
+  /* heatmap */
+  --heat-empty: #E5E7EB;
+  --heat-l1: #6EE7B7;
+  --heat-l2: #10B981;
+  --heat-l3: #047857;
+  --heat-l4: #064E3B;
+}
+
+.dark {
+  --bg: #0C0C0C;
+  --surface: #1A1A1A;
+  --surface-hover: #242424;
+  --ink: #F2F2F2;
+  --muted: #9A9A9A;
+  --line: #2A2A2A;
+  --status-green: #16A34A;
+
+  /* heatmap */
+  --heat-empty: #262626;
+  --heat-l1: #6EE7B7;
+  --heat-l2: #10B981;
+  --heat-l3: #047857;
+  --heat-l4: #064E3B;
+}
+
+/* ── Tailwind base ──────────────────────────────── */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base resets ────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    transition: background-color 300ms ease, color 300ms ease;
+    overflow-x: hidden;
+    /* prevent horizontal scroll globally */
+    max-width: 100vw;
+  }
+
+  /* Scroll offset for fixed nav */
+  section[id] {
+    scroll-margin-top: 96px;
+  }
+
+  /* Visible focus rings — WCAG 2.4.7 */
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Smooth dark-mode cross-fade for all token-using props */
+  *, *::before, *::after {
+    transition:
+      background-color 300ms ease,
+      border-color 300ms ease,
+      color 300ms ease,
+      fill 300ms ease,
+      stroke 300ms ease,
+      box-shadow 300ms ease;
+  }
+
+  /* But don't slow down intentional fast interactions */
+  button, a, [role="button"] {
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease,
+      opacity 150ms ease,
+      box-shadow 150ms ease,
+      transform 150ms ease;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+/* ── Underline-from-left link animation ─────────── */
+@layer utilities {
+  .link-underline {
+    position: relative;
+    text-decoration: none;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 200ms ease;
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    width: 100%;
+  }
+
+  /* Thick underline variant for tagline link */
+  .link-underline-thick::after {
+    height: 3px;
+    background: var(--surface-hover);
+    bottom: -2px;
+  }
+
+  /* Screen-reader only utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: fixed;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+/* ── View Transitions — theme toggle circle wipe ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* New theme slides in as an expanding circle from the toggle position */
+::view-transition-new(root) {
+  animation: theme-circle-expand 0.45s ease-in both;
+}
+
+/* Old theme stays static underneath */
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+@keyframes theme-circle-expand {
+  from {
+    clip-path: circle(0px at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--vt-r, 150%) at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
