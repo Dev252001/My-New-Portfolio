@@ -272,6 +272,10 @@ export default function Hero({ hero }: Props) {
             src="/images/portrait.png"
             alt="Portrait of Devashish Pandey"
             className="w-full aspect-[4/5] object-cover"
+            style={{
+              maskImage: 'linear-gradient(to bottom, black 92%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 92%, transparent 100%)',
+            }}
             loading="eager"
             onError={(e) => {
               // Show SVG placeholder if image not found

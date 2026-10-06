@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 
 import SectionTitle from './shared/SectionTitle';
-import FadeUp from './shared/FadeUp';
 import education from '../data/education';
 
 export default function Education() {
@@ -12,16 +11,6 @@ export default function Education() {
     >
       {/* Giant title */}
       <SectionTitle>EDUCATION</SectionTitle>
-
-      {/* Statement heading */}
-      <FadeUp delay={0.1}>
-        <h3
-          className="font-sans font-normal text-ink leading-[1.1] mt-8 mb-14
-            text-[clamp(2.5rem,4vw,5rem)]"
-        >
-          Foundation First
-        </h3>
-      </FadeUp>
 
       {/* Education rows */}
       <div>

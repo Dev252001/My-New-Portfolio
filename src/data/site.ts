@@ -61,7 +61,7 @@ const site: SiteData = {
     name: 'DEVASHISH PANDEY',
     metaLeft: {
       line1: 'AI/ML & Full-Stack Developer',
-      line2: 'BCA · Galgotias University',
+      line2: '',
     },
     metaCenter: {
       line1: 'Based in',

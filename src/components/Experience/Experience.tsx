@@ -1,7 +1,6 @@
 import SectionTitle from '../shared/SectionTitle';
 import FadeUp from '../shared/FadeUp';
 import ExperienceRow from './ExperienceRow';
-import PlaceholderImage from '../shared/PlaceholderImage';
 import experience from '../../data/experience';
 
 export default function Experience() {
@@ -28,10 +27,10 @@ export default function Experience() {
 
         {/* Left: image — full width on mobile, ~38% on md+ */}
         <FadeUp className="w-full md:w-[38%] md:sticky md:top-28 flex-shrink-0">
-          <PlaceholderImage
-            variant="landscape"
-            alt="A photo representing professional experience"
-            className="w-full aspect-[4/5] max-h-[400px] md:max-h-none"
+          <img
+            src="/images/experience-photo.png"
+            alt="Devashish Pandey working on a laptop"
+            className="w-full aspect-[4/5] max-h-[400px] md:max-h-none object-cover object-top"
           />
         </FadeUp>
 
