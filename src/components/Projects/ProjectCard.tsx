@@ -2,13 +2,43 @@ import { motion } from 'framer-motion';
 import ProjectScreenshot from '../shared/ProjectScreenshot';
 import type { ProjectItem } from '../../data/projects';
 import { SiGithub, SiFigma } from 'react-icons/si';
-import { ExternalLink, Play } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 interface Props {
   project: ProjectItem;
   index: number;
 }
 
+/* ── Clean autoplay video — no controls ───────── */
+function VideoPlayer({ src, label }: { src: string; label: string }) {
+  return (
+    <div className="relative aspect-video w-full overflow-hidden rounded-[12px] group">
+      <video
+        src={src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="w-full h-full object-cover"
+        aria-label={label}
+      />
+      {/* Subtle DEMO badge on hover */}
+      <motion.div
+        className="absolute top-3 right-3 pointer-events-none"
+        initial={{ opacity: 0 }}
+        whileHover={{ opacity: 1 }}
+      >
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em]
+          text-white/80 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-full">
+          DEMO
+        </span>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ── Project card ──────────────────────────────── */
 export default function ProjectCard({ project, index }: Props) {
   return (
     <motion.article
@@ -19,7 +49,7 @@ export default function ProjectCard({ project, index }: Props) {
       transition={{ duration: 0.45, ease: 'easeOut', delay: index * 0.08 }}
       className="flex flex-col"
     >
-      {/* Media card — video if available, else screenshot placeholder */}
+      {/* Media card */}
       <motion.div
         className="relative w-full rounded-[12px] overflow-hidden
           bg-[#F0EEE9] dark:bg-[#1a1a1a]
@@ -28,19 +58,8 @@ export default function ProjectCard({ project, index }: Props) {
         transition={{ duration: 0.3, ease: 'easeOut' }}
       >
         {project.videoUrl ? (
-          /* ── Video player ── */
-          <div className="aspect-video w-full">
-            <video
-              src={project.videoUrl}
-              controls
-              preload="metadata"
-              playsInline
-              className="w-full h-full object-cover rounded-[12px]"
-              aria-label={`${project.title} demo video`}
-            />
-          </div>
+          <VideoPlayer src={project.videoUrl} label={`${project.title} demo`} />
         ) : (
-          /* ── Screenshot placeholder ── */
           <div className="aspect-video flex items-center justify-center p-6">
             <motion.div
               className="w-[70%] rounded-lg overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.1)]"
@@ -113,15 +132,6 @@ export default function ProjectCard({ project, index }: Props) {
             >
               <SiFigma size={18} />
             </a>
-          )}
-          {project.videoUrl && (
-            <span
-              className="flex items-center gap-1 font-mono text-[11px] uppercase
-                tracking-[0.1em] text-muted"
-              aria-label="Demo video available"
-            >
-              <Play size={12} /> Demo
-            </span>
           )}
         </div>
       </div>

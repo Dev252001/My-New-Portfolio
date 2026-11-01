@@ -38,14 +38,7 @@ const projects: ProjectItem[] = [
     description:
       'RAG-powered study platform: upload PDFs, DOCX, PPTX and chat with your documents, auto-generate quizzes, flashcards and summaries.',
     githubUrl: 'https://github.com/Dev252001/Study-Buddy-AI',
-  },
-  {
-    id: 'ecoground',
-    title: 'ECOGROUND — BIOBLITZ',
-    tag: 'Web',
-    description:
-      'Gamified environmental-education platform built for Smart India Hackathon — XP badges, habit tracker, leaderboard and course modules.',
-    githubUrl: 'https://github.com/Dev252001/EcoGround',
+    videoUrl: '/videos/study-buddy.mp4',
   },
 ];
 
